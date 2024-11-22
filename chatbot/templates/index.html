@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot de REAL COMPUTER S.A.C.</title>
+  <script>
+    async function sendMessage() {
+      const userMessage = document.getElementById('userMessage').value;
+      const response = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
+      });
+      const data = await response.json();
+      document.getElementById('chat').innerHTML += `
+                <p><b>Tú:</b> ${userMessage}</p>
+                <p><b>Bot:</b> ${data.response}</p>
+            `;
+      document.getElementById('userMessage').value = '';
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Bienvenido al Chatbot de REAL COMPUTER S.A.C.</h1>
+  <div id="chat" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; height: 200px; overflow-y: auto;">
+    <p><b>Bot:</b> Hola, escribe "información" para empezar.</p>
+  </div>
+  <input type="text" id="userMessage" placeholder="Escribe tu mensaje aquí">
+  <button onclick="sendMessage()">Enviar</button>
+</body>
+
+</html>
